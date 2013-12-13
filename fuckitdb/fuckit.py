@@ -81,7 +81,7 @@ class Model(object):
         self.id = self.assign_id()
 
     def assign_id(self):
-        next_id = len(self.data.col_values(1)) + 1
+        next_id = len(self.data.col_values(1)) or 1
         return next_id
 
 
