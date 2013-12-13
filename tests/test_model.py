@@ -1,13 +1,13 @@
 import fuckitdb
-import test_database
+from . import test_database
 
 database = test_database.create_test_db()
 
 @database.register()
 class FooModel(fuckitdb.Model):
     def __init__(self, foo, bar):
-        self.foo = foo
-        self.bar = bar
+        self.foo = self.field("foo", foo)
+        self.bar = self.field("bar", bar)
 
 
 class TestModel(object):
