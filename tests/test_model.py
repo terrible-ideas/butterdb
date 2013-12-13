@@ -8,7 +8,6 @@ class FooModel(fuckitdb.Model):
     def __init__(self, foo, bar):
         self.foo = foo
         self.bar = bar
-        self.register(database)
 
 
 class TestModel(object):
@@ -19,4 +18,12 @@ class TestModel(object):
         assert model.foo == foo
         assert model.bar == bar
 
+    def test_name(self):
+        assert FooModel.get_name() == "FooModel"
 
+    def test_registration(self):
+        assert FooModel.get_name() in database.get_worksheet_names()
+
+    def test_id(self):
+        model = FooModel("test", "post")
+        assert model.id

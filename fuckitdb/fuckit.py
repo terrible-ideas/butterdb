@@ -9,13 +9,21 @@ class Database(object):
         self.client = gspread.login(username, password)
         self.db = self.client.open(name)
 
+    def get_worksheet_names(self):
+        """Returns a list of worksheet names as strings"""
+        return list(map(lambda x: x.title, self.db.worksheets()))
+
     def register(self):
         """Registers a model for storage in the database"""
         def decorator(f):
             f.database = self
-            f.data = self.db.worksheet(f.__name__)
+            sheet_name = f.get_name()
+            if sheet_name in self.get_worksheet_names():
+                f.data = self.db.worksheet(sheet_name)
+            else:
+                f.data = self.db.add_worksheet(title=sheet_name, rows="100", cols="20")
             return f
-        return decorator        
+        return decorator
 
 
 class ModelMetaclass(type):
@@ -30,18 +38,33 @@ class Model(object):
     """The base object for representing cell data as an object"""
     __metaclass__ = ModelMetaclass
 
-    def _get_own_sheet(self):
-        return self.database.__getattr__(self.__name__)
+    @classmethod
+    def get_name(cls):
+        return cls.__name__
 
     def __setattr__(self, attr, val):
-        pass
+        attrs = {row_value: ind for row_value, ind in enumerate(self.data.row_values(1))}
+        if attr in attrs:
+            attr_column = attrs[attr]
+        else:
+            attr_column = len(attrs) + 1
+            self.data.update_cell(attr_column, 1, attr)
+
+        print(attr_column, self.id, val)
+        self.data.update_cell(attr_column, self.id, val)
 
     def __getattr__(self, attr):
         pass
 
-    def _post_init(self):
-        self._id = self.database.assign_id(self)
+    def __repr__(self):
+        return "{}: {}".format(self.get_name(), self.id)
 
-    def register(self, database):
-        """Registers the model for storage in the database"""
-        self.database = database
+    def _add_attr(self, attr):
+        pass
+
+    def _post_init(self):
+        self.id = self.assign_id()
+
+    def assign_id(self):
+        next_id = len(self.data.col_values(1)) + 1
+        return next_id
