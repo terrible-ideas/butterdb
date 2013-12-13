@@ -15,6 +15,8 @@ class TestModel(object):
         foo, bar = "baz", "fro"
         model = FooModel(foo, bar)
 
+        print(repr(model.foo), repr(model.bar))
+
         assert model.foo == foo
         assert model.bar == bar
 
@@ -25,5 +27,5 @@ class TestModel(object):
         assert FooModel.get_name() in database.get_worksheet_names()
 
     def test_id(self):
-        model = FooModel("test", "post")
+        model = FooModel("a", "b")
         assert model.id

@@ -47,6 +47,13 @@ class Model(object):
         else:
             self.__dict__[attr] = val
 
+    def __getattribute__(self, attr):
+        obj = object.__getattribute__(self, attr)
+        if isinstance(obj, Field):
+            return obj.value
+        return obj
+            
+
     def field(self, name, value=None):
         columns = self.data.row_values(1)
         if name in columns:
@@ -94,3 +101,4 @@ class Field(object):
             print("Updating {}, {} to be {}".format(self.row, self.column, val))
         else:
             self.__dict__[attr] = val
+
