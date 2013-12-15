@@ -59,16 +59,8 @@ class Model(object):
     @property
     def id(self):
         if '_id' not in self.__dict__:
-            self._id = self.assign_id()
+            self._id = len(self.data.col_values(1)) or 1
         return self._id
-
-    @property
-    def objects(self):
-        return self._objects
-
-    def assign_id(self):
-        next_id = len(self.data.col_values(1)) or 1
-        return next_id
 
 
 class Field(object):
