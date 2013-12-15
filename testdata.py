@@ -17,10 +17,6 @@ class User(fuckitdb.Model):
         self.age = self.field("age", age)
 
 
-def main():
-    a = User("widdershin", "test@gmail.com", "43")
-    a = User("test", "fxfds@gmail.com", "12")
-    a = User("bvbvb", "fxfds@gdfg.com", "22222222")
-
-if __name__ == '__main__':
-    main()
+a = User("widdershin", "test@gmail.com", "43")
+b = User("test", "fxfds@gmail.com", "12")
+c = User("bvbvb", "fxfds@gdfg.com", "22222222")

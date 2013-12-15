@@ -21,9 +21,11 @@ class Database(object):
             if sheet_name in self.get_worksheet_names():
                 f.data = self.db.worksheet(sheet_name)
             else:
-                f.data = self.db.add_worksheet(title=sheet_name, rows="100", cols="20")
+                f.data = self.db.add_worksheet(title=sheet_name,
+                                               rows="100", cols="20")
             return f
         return decorator
+
 
 class ModelMetaclass(type):
     def __call__(cls, *args, **kwargs):
@@ -42,7 +44,7 @@ class Model(object):
         return cls.__name__
 
     def __setattr__(self, attr, val):
-        if attr in self.__dict__ and isinstance(self.__dict__[attr], Field):        
+        if attr in self.__dict__ and isinstance(self.__dict__[attr], Field):
             self.__dict__[attr].value = val
         else:
             self.__dict__[attr] = val
@@ -52,7 +54,6 @@ class Model(object):
         if isinstance(obj, Field):
             return obj.value
         return obj
-            
 
     def field(self, name, value=None):
         columns = self.data.row_values(1)
@@ -66,7 +67,6 @@ class Model(object):
         print("Creating {} at {}, {}".format(name, row, column))
         self.data.update_cell(1, column, name)
         return Field(value, row, column, self.data)
-
 
     @property
     def id(self):
@@ -98,7 +98,7 @@ class Field(object):
         if attr == "value":
             self.__dict__["value"] = val
             self.data.update_cell(self.row, self.column, val)
-            print("Updating {}, {} to be {}".format(self.row, self.column, val))
+            print("Updating {}, {} to be {}".format(self.row,
+                                                    self.column, val))
         else:
             self.__dict__[attr] = val
-

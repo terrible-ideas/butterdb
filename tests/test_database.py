@@ -11,7 +11,8 @@ class TestDB(object):
         """Tests opening a Database"""
         database = create_test_db()
 
-        assert database != None
+        assert database is not None
+
 
 def create_test_db():
     database = fuckitdb.Database(name="TestDB",

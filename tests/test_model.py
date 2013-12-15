@@ -3,6 +3,7 @@ from . import test_database
 
 database = test_database.create_test_db()
 
+
 @database.register()
 class FooModel(fuckitdb.Model):
     def __init__(self, foo, bar):
