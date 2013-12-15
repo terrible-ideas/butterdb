@@ -5,8 +5,9 @@ email = os.environ["FUCKITDB_EMAIL"]
 password = os.environ["FUCKITDB_PASSWORD"]
 
 db = fuckitdb.Database(name="TestDB",
-                             username=email,
-                             password=password)
+                       username=email,
+                       password=password)
+
 
 @db.register()
 class User(fuckitdb.Model):
