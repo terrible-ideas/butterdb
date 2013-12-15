@@ -27,17 +27,8 @@ class Database(object):
         return decorator
 
 
-class ModelMetaclass(type):
-    def __call__(cls, *args, **kwargs):
-        """Called when you call MyNewClass() """
-        obj = type.__call__(cls, *args, **kwargs)
-        obj._post_init()
-        return obj
-
-
 class Model(object):
     """The base object for representing cell data as an object"""
-    __metaclass__ = ModelMetaclass
 
     @classmethod
     def get_name(cls):
@@ -76,9 +67,6 @@ class Model(object):
 
     def _add_attr(self, attr):
         pass
-
-    def _post_init(self):
-        self.id = self.assign_id()
 
     def assign_id(self):
         next_id = len(self.data.col_values(1)) or 1
