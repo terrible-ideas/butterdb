@@ -4,7 +4,7 @@ from . import test_database
 database = test_database.create_test_db()
 
 
-@database.register()
+@fuckitdb.register(database)
 class FooModel(fuckitdb.Model):
     def __init__(self, foo, bar):
         self.foo = self.field("foo", foo)

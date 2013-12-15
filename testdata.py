@@ -9,7 +9,7 @@ db = fuckitdb.Database(name="TestDB",
                        password=password)
 
 
-@db.register()
+@fuckitdb.register(db)
 class User(fuckitdb.Model):
     def __init__(self, username, email, age):
         super(User, self).__init__()
