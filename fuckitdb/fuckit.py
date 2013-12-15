@@ -17,7 +17,7 @@ class Database(object):
         """Registers a model for storage in the database"""
         def decorator(f):
             f.database = self
-            sheet_name = f.get_name()
+            sheet_name = type(f).__name__
             if sheet_name in self.get_worksheet_names():
                 f.data = self.db.worksheet(sheet_name)
             else:
@@ -30,11 +30,9 @@ class Database(object):
 class Model(object):
     """The base object for representing cell data as an object"""
 
-    @classmethod
-    def get_name(cls):
-        return cls.__name__
-
     def __setattr__(self, attr, val):
+        print(attr, val)
+
         if attr in self.__dict__ and isinstance(self.__dict__[attr], Field):
             self.__dict__[attr].value = val
         else:
@@ -65,8 +63,9 @@ class Model(object):
             self._id = self.assign_id()
         return self._id
 
-    def _add_attr(self, attr):
-        pass
+    @property
+    def objects(self):
+        return self._objects
 
     def assign_id(self):
         next_id = len(self.data.col_values(1)) or 1

@@ -25,7 +25,7 @@ class TestModel(object):
         assert FooModel.get_name() == "FooModel"
 
     def test_registration(self):
-        assert FooModel.get_name() in database.get_worksheet_names()
+        assert FooModel.__name__ in database.get_worksheet_names()
 
     def test_id(self):
         model = FooModel("a", "b")
