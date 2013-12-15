@@ -16,7 +16,7 @@ class Database(object):
         """Registers a model for storage in the database"""
         def decorator(f):
             f.database = self
-            sheet_name = type(f).__name__
+            sheet_name = f.__name__
             if sheet_name in self.get_worksheet_names():
                 f.data = self.db.worksheet(sheet_name)
             else:

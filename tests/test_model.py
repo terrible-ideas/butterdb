@@ -22,7 +22,7 @@ class TestModel(object):
         assert model.bar == bar
 
     def test_registration(self):
-        assert FooModel.__name__ in database.get_worksheet_names()
+        assert "FooModel" in database.get_worksheet_names()
 
     def test_id(self):
         model = FooModel("a", "b")
