@@ -4,7 +4,6 @@ import gspread
 class Database(object):
     """docstring for Database"""
     def __init__(self, name, username, password):
-        super(Database, self).__init__()
         self.name = name
         self.client = gspread.login(username, password)
         self.db = self.client.open(name)
@@ -75,7 +74,6 @@ class Model(object):
 class Field(object):
     """A database field"""
     def __init__(self, value, row, column, data):
-        super(Field, self).__init__()
         self.data = data
         self.row = row
         self.column = column
