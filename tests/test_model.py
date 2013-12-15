@@ -21,9 +21,6 @@ class TestModel(object):
         assert model.foo == foo
         assert model.bar == bar
 
-    def test_name(self):
-        assert FooModel.get_name() == "FooModel"
-
     def test_registration(self):
         assert FooModel.__name__ in database.get_worksheet_names()
 
