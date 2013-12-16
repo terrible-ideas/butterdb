@@ -3,8 +3,21 @@ from . import test_database
 
 database = test_database.create_test_db()
 
-if "FooModel" in database.get_worksheet_names():
-    database.db.del_worksheet(database.db.worksheet("FooModel"))
+#if "FooModel" in database.get_worksheet_names():
+#    database.db.del_worksheet(database.db.worksheet("FooModel"))
+
+
+class MockDB(fuckitdb.Database):
+    """A Mock Database that doesn't connect to Google Spreadhset"""
+    def __init__(self, name):
+        self.models = {}
+        self.name = name
+
+    def get_worksheet_names(self):
+        return list(self.models.keys())
+
+database = MockDB('TestDB')
+
 
 @fuckitdb.register(database)
 class FooModel(fuckitdb.Model):

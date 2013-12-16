@@ -4,14 +4,7 @@ import gspread
 def register(database):
     """Registers a model for storage in the database"""
     def decorator(f):
-        f.database = database
-        sheet_name = f.__name__
-        database.models[sheet_name] = f
-        if sheet_name in database.get_worksheet_names():
-            f.data = database.db.worksheet(sheet_name)
-        else:
-            f.data = database.db.add_worksheet(title=sheet_name,
-                                               rows="100", cols="20")
+        database.register_model(f)
         return f
     return decorator
 
@@ -27,6 +20,21 @@ class Database(object):
     def get_worksheet_names(self):
         """Returns a list of worksheet names as strings"""
         return list(map(lambda x: x.title, self.db.worksheets()))
+
+    def register_model(self, model):
+        """Registers a model for use with the database"""
+        model.database = self
+        sheet_name = model.__name__
+        self.models[sheet_name] = model
+
+        model.data = self.get_or_create_worksheet(sheet_name)
+
+    def get_or_create_worksheet(self, sheet_name):
+        if sheet_name in self.get_worksheet_names():
+            return self.db.worksheet(sheet_name)
+
+        return self.db.add_worksheet(title=sheet_name,
+                                     rows="100", cols="20")
 
 
 class Model(object):
