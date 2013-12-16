@@ -3,6 +3,8 @@ from . import test_database
 
 database = test_database.create_test_db()
 
+if "FooModel" in database.get_worksheet_names():
+    database.db.del_worksheet(database.db.worksheet("FooModel"))
 
 @fuckitdb.register(database)
 class FooModel(fuckitdb.Model):
