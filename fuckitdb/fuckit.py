@@ -31,20 +31,19 @@ class Database(object):
 
 class Model(object):
     """The base object for representing cell data as an object"""
+    _fields = {}
 
     def __setattr__(self, attr, val):
-        print(attr, val)
-
-        if attr in self.__dict__ and isinstance(self.__dict__[attr], Field):
+        if attr in self._fields and attr in self.__dict__:
             self.__dict__[attr].value = val
         else:
             self.__dict__[attr] = val
 
     def __getattribute__(self, attr):
-        obj = object.__getattribute__(self, attr)
-        if isinstance(obj, Field):
-            return obj.value
-        return obj
+        fields = object.__getattribute__(self, '_fields')
+        if attr in fields:
+            return fields[attr].value
+        return object.__getattribute__(self, attr)
 
     def field(self, name, value=None):
         columns = self.data.row_values(1)
@@ -57,7 +56,11 @@ class Model(object):
         print("ID: {}".format(self.id))
         print("Creating {} at {}, {}".format(name, row, column))
         self.data.update_cell(1, column, name)
-        return Field(value, row, column, self.data)
+
+        new_field = Field(value, row, column, self.data)
+        self.__class__._fields[name] = new_field
+
+        return new_field
 
     @property
     def id(self):
