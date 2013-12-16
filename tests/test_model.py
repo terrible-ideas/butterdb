@@ -27,3 +27,6 @@ class TestModel(object):
     def test_id(self):
         model = FooModel("a", "b")
         assert model.id
+
+    def test_fields(self):
+        assert FooModel._fields.keys() == ["foo", "bar"]

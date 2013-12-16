@@ -29,6 +29,7 @@ class Database(object):
 
 class Model(object):
     """The base object for representing cell data as an object"""
+    _fields = {}
 
     def __setattr__(self, attr, val):
         print(attr, val)
@@ -55,7 +56,12 @@ class Model(object):
         print("ID: {}".format(self.id))
         print("Creating {} at {}, {}".format(name, row, column))
         self.data.update_cell(1, column, name)
-        return Field(value, row, column, self.data)
+
+        new_field = Field(value, row, column, self.data)
+        self.__class__._fields[name] = new_field
+
+        return new_field
+
 
     @property
     def id(self):
