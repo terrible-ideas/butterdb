@@ -32,17 +32,16 @@ class Model(object):
     _fields = {}
 
     def __setattr__(self, attr, val):
-
-        if attr in self.__class__._fields and attr in self.__dict__:
+        if attr in self._fields and attr in self.__dict__:
             self.__dict__[attr].value = val
         else:
             self.__dict__[attr] = val
 
     def __getattribute__(self, attr):
-        obj = object.__getattribute__(self, attr)
-        if isinstance(obj, Field):
-            return obj.value
-        return obj
+        fields = object.__getattribute__(self, '_fields')
+        if attr in fields:
+            return fields[attr].value
+        return object.__getattribute__(self, attr)
 
     def field(self, name, value=None):
         columns = self.data.row_values(1)
