@@ -6,6 +6,7 @@ def register(database):
     def decorator(f):
         f.database = database
         sheet_name = f.__name__
+        database.models[sheet_name] = f
         if sheet_name in database.get_worksheet_names():
             f.data = database.db.worksheet(sheet_name)
         else:
@@ -18,6 +19,7 @@ def register(database):
 class Database(object):
     """docstring for Database"""
     def __init__(self, name, username, password):
+        self.models = {}
         self.name = name
         self.client = gspread.login(username, password)
         self.db = self.client.open(name)
