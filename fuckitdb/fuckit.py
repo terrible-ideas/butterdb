@@ -32,9 +32,8 @@ class Model(object):
     _fields = {}
 
     def __setattr__(self, attr, val):
-        print(attr, val)
 
-        if attr in self.__dict__ and isinstance(self.__dict__[attr], Field):
+        if attr in self.__class__._fields and attr in self.__dict__:
             self.__dict__[attr].value = val
         else:
             self.__dict__[attr] = val
@@ -61,7 +60,6 @@ class Model(object):
         self.__class__._fields[name] = new_field
 
         return new_field
-
 
     @property
     def id(self):
