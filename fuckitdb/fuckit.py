@@ -37,7 +37,6 @@ class Model(object):
     def __init__(self, id=None):
         self.fields = {}
         if id:
-            print("Id specified: ", id)
             self._id = id
 
     def __setattr__(self, attr, val):
@@ -93,7 +92,6 @@ class Model(object):
     def get_instances(cls):
         instances = []
         for id, fields in enumerate(cls.data.get_all_values()[1:]):
-            print(id, fields)
             instances.append(cls(*fields, id=id + 1))
         return instances
 
