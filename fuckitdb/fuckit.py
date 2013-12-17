@@ -5,8 +5,8 @@ def register(database):
     """Registers a model for storage in the database"""
     def decorator(f):
 
-        f.columns = f.generate_columns()
         database.register_model(f)
+        f.columns = f.generate_columns()
         return f
     return decorator
 
@@ -37,6 +37,15 @@ class Database(object):
 
         return self.db.add_worksheet(title=sheet_name,
                                      rows="100", cols="20")
+
+    def get_cell(self, data, row, column):
+        return data.cell(row, column)
+
+    def update_cells(self, data, cells):
+        data.update_cells(cells)
+
+    def col_values(self, data, column):
+        return data.col_values(column)
 
 
 class Model(object):
@@ -81,7 +90,7 @@ class Model(object):
 
         if new_column:
             print("Creating {} at {}, {}".format(name, 1, column))
-            self.data.update_cell(1, column, name)
+            self.database.update_cell(1, column, name)
 
         new_field = Field(name, value, row, column, self.data)
         self.fields[name] = new_field
@@ -91,11 +100,11 @@ class Model(object):
     def commit(self):
         cells = []
         for field in self.fields.values():
-            cell = self.data.cell(field.row, field.column)
+            cell = self.database.get_cell(field.row, field.column)
             cell.value = field.value
             cells.append(cell)
 
-        self.data.update_cells(cells)
+        self.database.update_cells(cells)
 
     @classmethod
     def get_instances(cls):
