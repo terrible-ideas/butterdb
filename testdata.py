@@ -11,8 +11,8 @@ db = fuckitdb.Database(name="TestDB",
 
 @fuckitdb.register(db)
 class User(fuckitdb.Model):
-    def __init__(self, username, email, age):
-        super(User, self).__init__()
+    def __init__(self, username, email, age, id=None):
+        super(User, self).__init__(id)
         self.username = self.field("username", username)
         self.email = self.field("email", email)
         self.age = self.field("age", age)
