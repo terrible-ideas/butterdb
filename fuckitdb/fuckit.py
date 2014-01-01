@@ -100,11 +100,11 @@ class Model(object):
     def commit(self):
         cells = []
         for field in self.fields.values():
-            cell = self.database.get_cell(field.row, field.column)
+            cell = self.database.get_cell(self.data, field.row, field.column)
             cell.value = field.value
             cells.append(cell)
 
-        self.database.update_cells(cells)
+        self.database.update_cells(self.data, cells)
 
     @classmethod
     def get_instances(cls):

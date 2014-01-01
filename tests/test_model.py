@@ -1,7 +1,4 @@
 import fuckitdb
-from . import test_database
-
-database = test_database.create_test_db()
 
 #if "FooModel" in database.get_worksheet_names():
 #    database.db.del_worksheet(database.db.worksheet("FooModel"))
@@ -12,11 +9,22 @@ class MockDB(fuckitdb.Database):
     def __init__(self, name):
         self.models = {}
         self.name = name
+        self.worksheets = {}
 
     def get_worksheet_names(self):
         return list(self.models.keys())
 
-database = MockDB('TestDB')
+    def get_or_create_worksheet(self, sheet_name):
+        if sheet_name in self.worksheets:
+            return self.worksheets[sheet_name]
+        else:
+            return [['' for i in range(20)] for j in range(100)]
+
+    def get_cell(self, data, row, column):
+        return data[row][column]
+
+
+database = MockDB("TestDB")
 
 
 @fuckitdb.register(database)
