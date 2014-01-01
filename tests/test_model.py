@@ -21,7 +21,17 @@ class MockDB(fuckitdb.Database):
             return [['' for i in range(20)] for j in range(100)]
 
     def get_cell(self, data, row, column):
-        return data[row][column]
+        print(row, column, len(data[0]), len(data))
+        return data[column]
+
+    def col_values(self, data, column):
+        return list(zip(*data)[column])
+
+    def row_values(self, data, row):
+        return data[row]
+
+    def get_all_values(self, data):
+        return data
 
 
 database = MockDB("TestDB")

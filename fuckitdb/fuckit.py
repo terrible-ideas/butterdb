@@ -47,6 +47,12 @@ class Database(object):
     def col_values(self, data, column):
         return data.col_values(column)
 
+    def row_values(self, data, row):
+        return data.row_values(row)
+
+    def get_all_values(self, data):
+        return data.get_all_values()
+
 
 class Model(object):
     """The base object for representing cell data as an object"""
@@ -74,7 +80,7 @@ class Model(object):
     @classmethod
     def generate_columns(cls):
         return {label: indice + 1 for indice, label in
-                enumerate(cls.data.row_values(1))}
+                enumerate(cls.database.row_values(cls.data, 1))}
 
     def field(self, name, value=None):
         self.__class__._fields.add(name)
@@ -109,14 +115,15 @@ class Model(object):
     @classmethod
     def get_instances(cls):
         instances = []
-        for id, fields in enumerate(cls.data.get_all_values()[1:]):
+        for id, fields in enumerate(cls.database.get_all_values(
+                                    cls.data)[1:]):
             instances.append(cls(*fields, id=id + 1))
         return instances
 
     @property
     def id(self):
         if '_id' not in self.__dict__:
-            self._id = len(self.data.col_values(1)) or 1
+            self._id = len(self.database.col_values(self.data, 1)) or 1
         return self._id
 
 
