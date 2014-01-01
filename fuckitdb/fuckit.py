@@ -1,4 +1,5 @@
 import gspread
+import collections
 
 
 def register(database):
@@ -39,16 +40,19 @@ class Database(object):
                                      rows="100", cols="20")
 
     def get_cell(self, data, row, column):
-        return data.cell(row, column)
+        return data.cell(row + 1, column + 1)
+
+    def update_cell(self, data, row, column, value):
+        data.update_cell(row, column, value)
 
     def update_cells(self, data, cells):
         data.update_cells(cells)
 
     def col_values(self, data, column):
-        return data.col_values(column)
+        return data.col_values(column + 1)
 
     def row_values(self, data, row):
-        return data.row_values(row)
+        return data.row_values(row + 1)
 
     def get_all_values(self, data):
         return data.get_all_values()
@@ -89,16 +93,19 @@ class Model(object):
         if name in self.columns:
             column = self.columns[name]
         else:
-            column = len(self.columns) + 1
+            column = len(self.columns)
             self.__class__.columns[name] = column
+            new_column = True
 
-        row = self.id + 1
+        row = self.id
+
+        print("Row: {}".format(row))
 
         if new_column:
-            print("Creating {} at {}, {}".format(name, 1, column))
-            self.database.update_cell(1, column, name)
+            print("Creating {} at {}, {}".format(name, 0, column))
+            self.database.update_cell(self.data, 0, column, name)
 
-        new_field = Field(name, value, row, column, self.data)
+        new_field = Cell(row, column, value)
         self.fields[name] = new_field
 
         return new_field
@@ -107,6 +114,7 @@ class Model(object):
         cells = []
         for field in self.fields.values():
             cell = self.database.get_cell(self.data, field.row, field.column)
+            print(cell)
             cell.value = field.value
             cells.append(cell)
 
@@ -115,29 +123,39 @@ class Model(object):
     @classmethod
     def get_instances(cls):
         instances = []
-        for id, fields in enumerate(cls.database.get_all_values(
-                                    cls.data)[1:]):
-            instances.append(cls(*fields, id=id + 1))
+        print(cls.database.get_all_values(cls.data))
+        for id, fields in enumerate(filter(lambda x: any(x),
+                                    cls.database.get_all_values(
+                                        cls.data))[1:]):
+            print(len(fields))
+
+            instances.append(cls(*filter(None, fields), id=id))
         return instances
 
     @property
     def id(self):
         if '_id' not in self.__dict__:
-            self._id = len(self.database.col_values(self.data, 1)) or 1
+            self._id = len(self.database.col_values(self.data, 0)) or 1
         return self._id
 
-
-class Field(object):
-    """A database field"""
-    def __init__(self, name, value, row, column, data):
-        self.name = name
-        self.data = data
+class Cell(object):
+    def __init__(self, row, column, value):
+        super(Cell, self).__init__()
         self.row = row
         self.column = column
         self.value = value
 
-    def __setattr__(self, attr, val):
-        if attr == "value":
-            self.__dict__["value"] = val
-        else:
-            self.__dict__[attr] = val
+
+# class Field(object):
+#     """A database field"""
+#     def __init__(self, name, value, row, column, data):
+#         self.name = name
+#         self.row = row
+#         self.column = column
+#         self.value = value
+
+#     def __setattr__(self, attr, val):
+#         if attr == "value":
+#             self.__dict__["value"] = val
+#         else:
+#             self.__dict__[attr] = val
