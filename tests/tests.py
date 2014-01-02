@@ -1,8 +1,4 @@
 import fuckitdb
-from . import test_database
-
-#if "FooModel" in database.get_worksheet_names():
-#    database.db.del_worksheet(database.db.worksheet("FooModel"))
 
 
 class MockDB(fuckitdb.Database):
@@ -42,9 +38,7 @@ class MockDB(fuckitdb.Database):
         map(lambda x: self.update_cell(data, x.row, x.column, x.value), cells)
 
 
-
 database = MockDB("TestDB")
-#database = test_database.create_test_db()
 
 
 @fuckitdb.register(database)
