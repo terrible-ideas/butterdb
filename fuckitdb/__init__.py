@@ -1,1 +1,1 @@
-from .fuckit import Database, Model, register
+from .fuckit import Database, Model, register, Cell
