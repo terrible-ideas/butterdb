@@ -39,6 +39,7 @@ class MockDB(fuckitdb.Database):
 
 
 database = MockDB("TestDB")
+#database = fuckitdb.Database("TestDB", "username", "password")
 
 
 @fuckitdb.register(database)
@@ -68,8 +69,7 @@ class TestModel(object):
         assert model.id
 
     def test_fields(self):
-        print(list(FooModel._fields))
-        assert list(FooModel._fields) == ["foo", "bar"]
+        assert list(FooModel.columns.keys()) == ["foo", "bar"]
 
     def test_objects(self):
         assert FooModel.get_instances()

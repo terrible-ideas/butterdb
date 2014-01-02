@@ -42,7 +42,7 @@ class Database(object):
         return data.cell(row + 1, column + 1)
 
     def update_cell(self, data, row, column, value):
-        data.update_cell(row, column, value)
+        data.update_cell(row + 1, column + 1, value)
 
     def update_cells(self, data, cells):
         data.update_cells(cells)
@@ -58,12 +58,11 @@ class Database(object):
 
 
 class Model(object):
-    """The base object for representing cell data as an object"""
-    _fields = set()
+    """The base object for representing cel0l data as an object"""
 
     def __init__(self, id=None):
         self.fields = {}
-        if id:
+        if id is not None:
             self._id = id
 
     def __setattr__(self, attr, val):
@@ -82,12 +81,10 @@ class Model(object):
 
     @classmethod
     def generate_columns(cls):
-        return {label: indice + 1 for indice, label in
-                enumerate(cls.database.row_values(cls.data, 1))}
+        return {label: indice for indice, label in
+                enumerate(cls.database.row_values(cls.data, 0))}
 
     def field(self, name, value=None):
-        self.__class__._fields.add(name)
-
         new_column = False
         if name in self.columns:
             column = self.columns[name]
@@ -110,6 +107,8 @@ class Model(object):
         return new_field
 
     def commit(self):
+        print("Commiting")
+        print(self.fields)
         cells = []
         for field in self.fields.values():
             cell = self.database.get_cell(self.data, field.row, field.column)
@@ -122,18 +121,16 @@ class Model(object):
     @classmethod
     def get_instances(cls):
         instances = []
-        print(cls.database.get_all_values(cls.data))
-        for id, fields in enumerate(filter(lambda x: any(x),
-                                    cls.database.get_all_values(
-                                        cls.data))[1:]):
-            print(len(fields))
-
-            instances.append(cls(*filter(None, fields), id=id))
+        for n, fields in enumerate(
+                filter(lambda x: any(x),
+                       cls.database.get_all_values(cls.data))[1:], start=1):
+            print('n is {} for fields: {}'.format(n, fields))
+            instances.append(cls(*filter(None, fields), id=n))
         return instances
 
     @property
     def id(self):
-        if '_id' not in self.__dict__:
+        if not hasattr(self, '_id'):
             self._id = len(self.database.col_values(self.data, 0)) or 1
         return self._id
 
