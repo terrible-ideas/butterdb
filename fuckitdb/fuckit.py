@@ -1,5 +1,4 @@
 import gspread
-import collections
 
 
 def register(database):
@@ -137,6 +136,7 @@ class Model(object):
         if '_id' not in self.__dict__:
             self._id = len(self.database.col_values(self.data, 0)) or 1
         return self._id
+
 
 class Cell(object):
     def __init__(self, row, column, value):
