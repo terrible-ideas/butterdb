@@ -95,8 +95,6 @@ class Model(object):
 
         row = self.id
 
-        print("Row: {}".format(row))
-
         if new_column:
             print("Creating {} at {}, {}".format(name, 0, column))
             self.database.update_cell(self.data, 0, column, name)
@@ -124,8 +122,7 @@ class Model(object):
         for n, fields in enumerate(
                 filter(lambda x: any(x),
                        cls.database.get_all_values(cls.data))[1:], start=1):
-            print('n is {} for fields: {}'.format(n, fields))
-            instances.append(cls(*filter(None, fields), id=n))
+            instances.append(cls(*fields[:len(cls.columns)], id=n))
         return instances
 
     @property
