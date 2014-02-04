@@ -73,11 +73,11 @@ class Model(object):
 
     def __init__(self, id=None):
         self.fields = {}
+        self.changed_values = []
         if id is not None:
             self._id = id
 
     def __setattr__(self, attr, val):
-
         if attr != "fields" and attr in self.fields and attr in self.__dict__:
             self.__dict__[attr].value = val
         else:
@@ -122,11 +122,12 @@ class Model(object):
         print("Commiting")
         print(self.fields)
         cells = []
-        for field in self.fields.values():
+        for field in filter(lambda x: x.has_changed, self.fields.values()):
             cell = self.database.get_cell(self.data, field.row, field.column)
             print(cell)
             cell.value = field.value
             cells.append(cell)
+            field.has_changed = False
 
         self.database.update_cells(self.data, cells)
 
@@ -155,18 +156,10 @@ class Cell(object):
         self.row = row
         self.column = column
         self.value = value
+        self.has_changed = True
 
+    def __setattr__(self, attr, val):
+        if attr == "value":
+            self.has_changed = True
 
-# class Field(object):
-#     """A database field"""
-#     def __init__(self, name, value, row, column, data):
-#         self.name = name
-#         self.row = row
-#         self.column = column
-#         self.value = value
-
-#     def __setattr__(self, attr, val):
-#         if attr == "value":
-#             self.__dict__["value"] = val
-#         else:
-#             self.__dict__[attr] = val
+        super(Cell, self).__setattr__(attr, val)
