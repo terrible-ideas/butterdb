@@ -12,7 +12,11 @@ def register(database):
 
 
 class Database(object):
-    """docstring for Database"""
+    """
+    Interacts with Google Spreadsheet.
+    Registers models and updates and reads data.
+    """
+
     def __init__(self, name, username, password):
         self.models = {}
         self.name = name
@@ -32,6 +36,7 @@ class Database(object):
         model.data = self.get_or_create_worksheet(sheet_name)
 
     def get_or_create_worksheet(self, sheet_name):
+        """Gets or creates a worksheet"""
         if sheet_name in self.get_worksheet_names():
             return self.db.worksheet(sheet_name)
 
@@ -39,26 +44,32 @@ class Database(object):
                                      rows="100", cols="20")
 
     def get_cell(self, data, row, column):
+        """Returns the cell object at the given position in the data object"""
         return data.cell(row + 1, column + 1)
 
     def update_cell(self, data, row, column, value):
+        """Update the cell at the given position to the new value"""
         data.update_cell(row + 1, column + 1, value)
 
     def update_cells(self, data, cells):
+        """Updates multiple cells"""
         data.update_cells(cells)
 
     def col_values(self, data, column):
+        """Returns all the values at the given column index. Starts at 0"""
         return data.col_values(column + 1)
 
     def row_values(self, data, row):
+        """Returns all the values at the given row index. Starts at 0"""
         return data.row_values(row + 1)
 
     def get_all_values(self, data):
+        """Returns a nested list of all data"""
         return data.get_all_values()
 
 
 class Model(object):
-    """The base object for representing cel0l data as an object"""
+    """The base object for representing cell data."""
 
     def __init__(self, id=None):
         self.fields = {}
@@ -81,10 +92,12 @@ class Model(object):
 
     @classmethod
     def generate_columns(cls):
+        """Returns a dict of all the column headers, indice: label"""
         return {label: indice for indice, label in
                 enumerate(cls.database.row_values(cls.data, 0))}
 
     def field(self, name, value=None):
+        """Constructs a field. Returns one if it exists, else creates one"""
         new_column = False
         if name in self.columns:
             column = self.columns[name]
@@ -105,6 +118,7 @@ class Model(object):
         return new_field
 
     def commit(self):
+        """Commit all changed or new data to the database."""
         print("Commiting")
         print(self.fields)
         cells = []
@@ -118,6 +132,7 @@ class Model(object):
 
     @classmethod
     def get_instances(cls):
+        """Returns a list of instances of the class from the database"""
         instances = []
         for n, fields in enumerate(
                 filter(lambda x: any(x),
@@ -127,12 +142,14 @@ class Model(object):
 
     @property
     def id(self):
+        """Sets or returns the object's id for representation in the db"""
         if not hasattr(self, '_id'):
             self._id = len(self.database.col_values(self.data, 0)) or 1
         return self._id
 
 
 class Cell(object):
+    """A value in a spreadsheet in the database"""
     def __init__(self, row, column, value):
         super(Cell, self).__init__()
         self.row = row
