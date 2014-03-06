@@ -13,13 +13,15 @@ Api reference:
    
 fuckitdb is a database ORM for Google Drive Spreadsheets.
 
+Basic usage::
+
    import fuckitdb
    
    database = fuckitdb.Database("MyDatabaseSheet", "foo@google.com", "password")
    
    
    @fuckitdb.register(database)
-   class User(fuckitdb.Mode):
+   class User(fuckitdb.Model):
        def __init__(self, name, password, id=None):
            super(User, self).__init__(id)
            self.name = self.field("name", name)
