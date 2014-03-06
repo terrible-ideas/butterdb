@@ -4,7 +4,9 @@ fuckitdb
 Master: [![Build Status](https://travis-ci.org/Widdershin/fuckitdb.png?branch=master)](https://travis-ci.org/Widdershin/fuckitdb)  
 Develop: [![Build Status](https://travis-ci.org/Widdershin/fuckitdb.png?branch=develop)](https://travis-ci.org/Widdershin/fuckitdb)
 
-FuckIt.db is a Python ORM for Google Drive Spreadsheets. Yep. Sorry. Never use this in production, ever (or at all).
+[Documentation](http://fuckitdb.readthedocs.org)
+
+fuckitdb is a Python ORM for Google Drive Spreadsheets. Yep. Sorry. Never use this in production, ever (or at all).
 
 Usage
 -----
