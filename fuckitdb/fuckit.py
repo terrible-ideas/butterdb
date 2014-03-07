@@ -113,7 +113,6 @@ class Model(object):
         row = self.id
 
         if new_column:
-            print("Creating {} at {}, {}".format(name, 0, column))
             self.database.update_cell(self.data, 0, column, name)
 
         new_field = Cell(row, column, value)
@@ -123,12 +122,9 @@ class Model(object):
 
     def commit(self):
         """Commit all changed or new data to the database."""
-        print("Commiting")
-        print(self.fields)
         cells = []
         for field in filter(lambda x: x.has_changed, self.fields.values()):
             cell = self.database.get_cell(self.data, field.row, field.column)
-            print(cell)
             cell.value = field.value
             cells.append(cell)
             field.has_changed = False
@@ -153,7 +149,6 @@ class Model(object):
         instance = cls.__new__(cls)
         instance._id = id
         instance.__init__(*args, **kwargs)
-        print(instance.__dict__)
         return instance
 
     @property
@@ -178,6 +173,10 @@ class Cell(object):
             self.has_changed = True
 
         super(Cell, self).__setattr__(attr, val)
+
+    def __repr__(self):
+        return "Cell(row={cell.row}, col={cell.column}, \
+                val={cell.value})".format(cell=self)
 
 
 class FieldPrefab(object):
