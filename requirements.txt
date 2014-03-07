@@ -1,11 +1,1 @@
-colorama==0.2.7
-distribute==0.6.34
-execnet==1.1
-gspread==0.1.0
-ipython==1.1.0
-nose==1.3.0
-py==1.4.18
-pyreadline==2.0
-pytest==2.4.2
-python-termstyle==0.1.10
-sniffer==0.3.2
+gspread>=0.1.0
