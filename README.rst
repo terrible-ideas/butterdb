@@ -6,8 +6,12 @@ fuckitdb
 
 `Documentation`_
 
-fuckitdb is a Python ORM for Google Drive Spreadsheets. Yep. Sorry.
-Never use this in production, ever (or at all).
+fuckitdb is a Python ORM for Google Drive Spreadsheets. Never use this for anything important, it's an experiment.
+
+Installation
+------------
+
+``pip install fuckitdb``
 
 Usage
 -----
@@ -26,10 +30,6 @@ Usage
     a = Foo('test')
     a.commit()
 
-Installation
-------------
-
-``pip install -r requirements.txt``
 
 License
 -------
