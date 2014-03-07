@@ -18,7 +18,7 @@ readme = open('README.rst').read()
 
 setup(
     name='fuckitdb',
-    version='0.1.0',
+    version='0.1.1',
     description='fuckitdb is a Python ORM for Google Drive Spreadsheets.',
     long_description=readme,
     author='Nick Johnstone',
