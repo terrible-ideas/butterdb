@@ -1,3 +1,5 @@
+from nose.tools import *  # PEP8 asserts
+
 import fuckitdb
 
 
@@ -18,8 +20,6 @@ class MockDB(fuckitdb.Database):
             return [['' for i in range(100)] for j in range(20)]
 
     def get_cell(self, data, row, column):
-        print(len(data))
-        print(row)
         return fuckitdb.Cell(row, column, data[row][column])
 
     def col_values(self, data, column):
@@ -55,20 +55,18 @@ class TestModel(object):
         model = FooModel(foo, bar)
         model.commit()
 
-        print(repr(model.foo), repr(model.bar))
-
-        assert model.foo == foo
-        assert model.bar == bar
+        assert_equal(model.foo, foo)
+        assert_equal(model.bar, bar)
 
     def test_registration(self):
-        assert "FooModel" in database.get_worksheet_names()
+        assert_in("FooModel", database.get_worksheet_names())
 
     def test_id(self):
         model = FooModel("a", "b")
         assert model.id
 
     def test_fields(self):
-        assert list(FooModel.columns.keys()) == ["foo", "bar"]
+        assert_equal(list(FooModel.columns.keys()), ["foo", "bar"])
 
     def test_objects(self):
         assert FooModel.get_instances()
@@ -77,5 +75,5 @@ class TestModel(object):
 
         instance = FooModel._init_with_id(6, "test", "post")
 
-        assert instance.id == 6
-        assert instance._id == 6
+        assert_equal(instance.id, 6)
+        assert_equal(instance._id, 6)
