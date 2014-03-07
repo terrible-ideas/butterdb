@@ -76,10 +76,13 @@ class Model(object):
                 and attr in self.__dict__):
             self.__dict__[attr].value = val
         else:
+            if isinstance(val, FieldPrefab):
+                val = self._field(val.name or attr, val.value)
+
             self.__dict__[attr] = val
 
     def __getattribute__(self, attr):
-        if hasattr(self, 'fields'):
+        if attr != "fields" and hasattr(self, "fields"):
             fields = object.__getattribute__(self, 'fields')
             if attr in fields:
                 return fields[attr].value
@@ -91,11 +94,14 @@ class Model(object):
         return {label: indice for indice, label in
                 enumerate(cls.database.row_values(cls.data, 0))}
 
-    def field(self, name, value=None):
-        """Constructs a field. Returns one if it exists, else creates one"""
+    def field(self, name=None, value=None):
         if not hasattr(self, "fields"):
             self.fields = {}
 
+        return FieldPrefab(name, value)
+
+    def _field(self, name, value=None):
+        """Constructs a field. Returns one if it exists, else creates one"""
         new_column = False
         if name in self.columns:
             column = self.columns[name]
@@ -172,3 +178,9 @@ class Cell(object):
             self.has_changed = True
 
         super(Cell, self).__setattr__(attr, val)
+
+
+class FieldPrefab(object):
+    def __init__(self, name=None, value=None):
+        self.name = name
+        self.value = value
