@@ -17,3 +17,10 @@ History
 ++++++++++++++++++
 
 * Included HISTORY.rst in package build
+
+0.1.3 7/3/14
+++++++++++++++++++
+
+* Model.field no longer requires name to be specified. Attribute name will be used if none is provided.
+* Model no longer needs to have id as a keyword argument, or call super in init
+* Tests now use pep8 asserts

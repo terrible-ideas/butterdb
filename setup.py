@@ -19,7 +19,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='fuckitdb',
-    version='0.1.2',
+    version='0.1.3',
     description='fuckitdb is a Python ORM for Google Drive Spreadsheets.',
     long_description=readme + '\n\n' + history,
     author='Nick Johnstone',
