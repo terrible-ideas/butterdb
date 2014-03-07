@@ -20,10 +20,9 @@ Basic usage::
    
    @fuckitdb.register(database)
    class User(fuckitdb.Model):
-       def __init__(self, name, password, id=None):
-           super(User, self).__init__(id)
-           self.name = self.field("name", name)
-           self.password = self.field("password", password)
+       def __init__(self, name, password):
+           self.name = self.field(name)
+           self.password = self.field(password)
    
    
    barry = User("Barry", "hunter2")

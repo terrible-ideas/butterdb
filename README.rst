@@ -18,17 +18,23 @@ Usage
 
 ::
 
-    import fuckitdb
-
-    database = fuckitdb.Database('TestDatabase', google_username, google_password)
-
-    @fuckitdb.register(database)
-    class Foo(fuckitdb.Model):
-      def __init__(self, bar, id=None):
-        self.bar = self.field("bar", bar)
-
-    a = Foo('test')
-    a.commit()
+   import fuckitdb
+   
+   database = fuckitdb.Database("MyDatabaseSheet", "foo@google.com", "password")
+   
+   
+   @fuckitdb.register(database)
+   class User(fuckitdb.Model):
+       def __init__(self, name, password):
+           self.name = self.field(name)
+           self.password = self.field(password)
+   
+   
+   barry = User("Barry", "hunter2")
+   barry.name = "Steve"
+   barry.commit()
+   
+   users = User.get_instances()
 
 
 License
