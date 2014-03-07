@@ -45,8 +45,8 @@ database = MockDB("TestDB")
 @fuckitdb.register(database)
 class FooModel(fuckitdb.Model):
     def __init__(self, foo, bar):
-        self.foo = self.field("foo", foo)
-        self.bar = self.field("bar", bar)
+        self.foo = self.field(foo)
+        self.bar = self.field(bar)
 
 
 class TestModel(object):

@@ -94,7 +94,7 @@ class Model(object):
         return {label: indice for indice, label in
                 enumerate(cls.database.row_values(cls.data, 0))}
 
-    def field(self, name=None, value=None):
+    def field(self, value=None, name=None):
         if not hasattr(self, "fields"):
             self.fields = {}
 
