@@ -44,8 +44,7 @@ database = MockDB("TestDB")
 
 @fuckitdb.register(database)
 class FooModel(fuckitdb.Model):
-    def __init__(self, foo, bar, id=None):
-        super(FooModel, self).__init__(id)
+    def __init__(self, foo, bar):
         self.foo = self.field("foo", foo)
         self.bar = self.field("bar", bar)
 
@@ -73,3 +72,10 @@ class TestModel(object):
 
     def test_objects(self):
         assert FooModel.get_instances()
+
+    def test_init_with_id(self):
+
+        instance = FooModel._init_with_id(6, "test", "post")
+
+        assert instance.id == 6
+        assert instance._id == 6

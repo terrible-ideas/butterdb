@@ -71,14 +71,9 @@ class Database(object):
 class Model(object):
     """The base object for representing cell data."""
 
-    def __init__(self, id=None):
-        self.fields = {}
-        self.changed_values = []
-        if id is not None:
-            self._id = id
-
     def __setattr__(self, attr, val):
-        if attr != "fields" and attr in self.fields and attr in self.__dict__:
+        if (attr not in ["fields", "_id"] and attr in self.fields
+                and attr in self.__dict__):
             self.__dict__[attr].value = val
         else:
             self.__dict__[attr] = val
@@ -98,6 +93,9 @@ class Model(object):
 
     def field(self, name, value=None):
         """Constructs a field. Returns one if it exists, else creates one"""
+        if not hasattr(self, "fields"):
+            self.fields = {}
+
         new_column = False
         if name in self.columns:
             column = self.columns[name]
@@ -135,11 +133,22 @@ class Model(object):
     def get_instances(cls):
         """Returns a list of instances of the class from the database"""
         instances = []
-        for n, fields in enumerate(
-                filter(lambda x: any(x),
-                       cls.database.get_all_values(cls.data))[1:], start=1):
-            instances.append(cls(*fields[:len(cls.columns)], id=n))
+
+        data = cls.database.get_all_values(cls.data)[1:]
+
+        for n, fields in enumerate([row for row in data if any(row)], start=1):
+            instances.append(
+                cls._init_with_id(id, *fields[:len(cls.columns)]))
+
         return instances
+
+    @classmethod
+    def _init_with_id(cls, id, *args, **kwargs):
+        instance = cls.__new__(cls)
+        instance._id = id
+        instance.__init__(*args, **kwargs)
+        print(instance.__dict__)
+        return instance
 
     @property
     def id(self):
