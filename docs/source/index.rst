@@ -6,8 +6,6 @@
 Welcome to fuckitdb's documentation!
 ====================================
 
-Api reference:
-
 .. toctree::
    :maxdepth: 2
    
