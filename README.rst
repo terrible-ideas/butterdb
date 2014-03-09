@@ -58,8 +58,9 @@ What's missing?
 * Customizable fields
 * Customizable table size (arbitrarily hardcoded)
 
-
-The sheet needs to exist in your drive account before you can use it. 
+Feedback
+--------
+Comments, concerns, issues and pull requests welcomed. Reddit /u/Widdershiny or email me at ncwjohnstone@gmail.com.
 
 License
 -------
