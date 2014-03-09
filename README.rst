@@ -6,6 +6,8 @@ fuckitdb
 
 `Documentation`_
 
+`fuckitdb on PyPi`_
+
 fuckitdb is a Python ORM for Google Drive Spreadsheets. Never use this for anything important, it's an experiment.
 
 Installation
@@ -43,6 +45,7 @@ License
 MIT License. See LICENSE file for full text.
 
 .. _Documentation: http://fuckitdb.readthedocs.org
+.. _fuckitdb on PyPi: https://pypi.python.org/pypi/fuckitdb
 
 .. |Build Status| image:: https://travis-ci.org/Widdershin/fuckitdb.png?branch=master
    :target: https://travis-ci.org/Widdershin/fuckitdb
