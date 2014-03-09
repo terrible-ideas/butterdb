@@ -49,6 +49,8 @@ What works?
 * Fields as attributes. decimals, ints and strings only (as far as I know)
 * Commits
 * Mocked unit tests, mock database
+* Arbitrary cell execution with `=blah()` (free stored procedures?)
+* Auto backup/bad patch control
 
 What's missing?
 ---------------
