@@ -37,15 +37,22 @@ Usage
    barry.commit()
    
    users = User.get_instances()
+   
+Tests
+-----
+`nosetests`
 
 What works?
 ----------
+* Store data in Google Spreadsheets (the cloud!!!)
 * Models from classes
 * Fields as attributes. decimals, ints and strings only (as far as I know)
 * Commits
+* Mocked unit tests, mock database
 
 What's missing?
 ---------------
+* Spreadsheets must exist before connecting
 * References
 * Collections
 * Customizable fields
