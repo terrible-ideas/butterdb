@@ -38,6 +38,21 @@ Usage
    
    users = User.get_instances()
 
+What works?
+----------
+* Models from classes
+* Fields as attributes. decimals, ints and strings only (as far as I know)
+* Commits
+
+What's missing?
+---------------
+* References
+* Collections
+* Customizable fields
+* Customizable table size (arbitrarily hardcoded)
+
+
+The sheet needs to exist in your drive account before you can use it. 
 
 License
 -------
