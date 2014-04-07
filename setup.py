@@ -19,7 +19,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='butterdb',
-    version='0.1.3',
+    version='0.1.4',
     description='butterdb is a Python ORM for Google Drive Spreadsheets.',
     long_description=readme + '\n\n' + history,
     author='Nick Johnstone',
