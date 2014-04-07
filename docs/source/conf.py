@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# fuckitdb documentation build configuration file, created by
+# butterdb documentation build configuration file, created by
 # sphinx-quickstart on Thu Mar  6 22:51:51 2014.
 #
 # This file is execfile()d with the current directory set to its
@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'fuckitdb'
+project = u'butterdb'
 copyright = u'2014, Nick Johnstone (Widdershin)'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -184,7 +184,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'fuckitdbdoc'
+htmlhelp_basename = 'butterdbdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -204,7 +204,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'fuckitdb.tex', u'fuckitdb Documentation',
+  ('index', 'butterdb.tex', u'butterdb Documentation',
    u'Nick Johnstone (Widdershin)', 'manual'),
 ]
 
@@ -234,7 +234,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'fuckitdb', u'fuckitdb Documentation',
+    ('index', 'butterdb', u'butterdb Documentation',
      [u'Nick Johnstone (Widdershin)'], 1)
 ]
 
@@ -248,8 +248,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'fuckitdb', u'fuckitdb Documentation',
-   u'Nick Johnstone (Widdershin)', 'fuckitdb', 'One line description of project.',
+  ('index', 'butterdb', u'butterdb Documentation',
+   u'Nick Johnstone (Widdershin)', 'butterdb', 'One line description of project.',
    'Miscellaneous'),
 ]
 

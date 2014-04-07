@@ -1,25 +1,25 @@
-.. fuckitdb documentation master file, created by
+.. butterdb documentation master file, created by
    sphinx-quickstart on Thu Mar  6 22:51:51 2014.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to fuckitdb's documentation!
+Welcome to butterdb's documentation!
 ====================================
 
 .. toctree::
    :maxdepth: 2
    
-fuckitdb is a database ORM for Google Drive Spreadsheets.
+butterdb is a database ORM for Google Drive Spreadsheets.
 
 Basic usage::
 
-   import fuckitdb
+   import butterdb
    
-   database = fuckitdb.Database("MyDatabaseSheet", "foo@google.com", "password")
+   database = butterdb.Database("MyDatabaseSheet", "foo@google.com", "password")
    
    
-   @fuckitdb.register(database)
-   class User(fuckitdb.Model):
+   @butterdb.register(database)
+   class User(butterdb.Model):
        def __init__(self, name, password):
            self.name = self.field(name)
            self.password = self.field(password)
@@ -34,7 +34,7 @@ Basic usage::
 API Reference:
 ==============
 
-.. automodule:: fuckitdb.fuckit
+.. automodule:: butterdb.fuckit
     :members:
 
 

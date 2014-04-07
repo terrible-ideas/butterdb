@@ -1,9 +1,9 @@
 from nose.tools import *  # PEP8 asserts
 
-import fuckitdb
+import butterdb
 
 
-class MockDB(fuckitdb.Database):
+class MockDB(butterdb.Database):
     """A Mock Database that doesn't connect to Google Spreadhset"""
     def __init__(self, name):
         self.models = {}
@@ -20,7 +20,7 @@ class MockDB(fuckitdb.Database):
             return [['' for i in range(100)] for j in range(20)]
 
     def get_cell(self, data, row, column):
-        return fuckitdb.Cell(row, column, data[row][column])
+        return butterdb.Cell(row, column, data[row][column])
 
     def col_values(self, data, column):
         return list(filter(None, zip(*data)[column]))
@@ -39,11 +39,11 @@ class MockDB(fuckitdb.Database):
 
 
 database = MockDB("TestDB")
-#database = fuckitdb.Database("TestDB", "username", "password")
+#database = butterdb.Database("TestDB", "username", "password")
 
 
-@fuckitdb.register(database)
-class FooModel(fuckitdb.Model):
+@butterdb.register(database)
+class FooModel(butterdb.Model):
     def __init__(self, foo, bar):
         self.foo = self.field(foo)
         self.bar = self.field(bar)
