@@ -1,13 +1,16 @@
+"""butterdb is a Python ORM for Google Drive Spreadsheets."""
+
+
 import gspread
 
 
 def register(database):
     """Registers a model for storage in the database"""
-    def decorator(f):
+    def decorator(function):
 
-        database.register_model(f)
-        f.columns = f.generate_columns()
-        return f
+        database.register_model(function)
+        function.columns = function.generate_columns()
+        return function
     return decorator
 
 

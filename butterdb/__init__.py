@@ -1,1 +1,1 @@
-from .fuckit import Database, Model, register, Cell
+from .butterdb import Database, Model, register, Cell
