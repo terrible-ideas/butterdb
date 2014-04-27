@@ -4,19 +4,13 @@ butterdb
 | Master: |Build Status|
 | Develop: |Build Status|
 
-`Documentation`_
+`Documentation`_ | `butterdb on PyPi`_
 
-`butterdb on PyPi`_
+butterdb is a library to help you work with Google Spreadsheet data. It lets you model your data as Python objects, to be easily manipulated or created.
 
-butterdb is a Python ORM for Google Drive Spreadsheets. Never use this for anything important, it's an experiment.
-
-Installation
-------------
-
-``pip install butterdb``
-
-Usage
+How do I use it?
 -----
+.. image:: http://i.imgur.com/h75z1k6.png
 
 ::
 
@@ -24,21 +18,41 @@ Usage
    
    database = butterdb.Database("MyDatabaseSheet", "foo@google.com", "password")
    
-   
    @butterdb.register(database)
    class User(butterdb.Model):
        def __init__(self, name, password):
            self.name = self.field(name)
            self.password = self.field(password)
    
+   users = User.get_instances
    
-   barry = User("Barry", "hunter2")
-   barry.name = "Steve"
-   barry.commit()
+   marianne = users[1]
    
-   users = User.get_instances()
+   print(marianne.password) # rainbow_trout
    
-Tests
+   marianne.password = "hunter2"
+   marianne.commit()
+
+
+How do I make instances?
+=================
+
+::
+
+   bob = User("bob", "BestPassword!")
+   bob.commit()
+
+
+Where do I get it?
+------------
+
+``pip install butterdb``
+
+Simple as that?
+---------------
+Yep! butterdb is a simple interface around `gspread`_. Just .commit() your objects when you want to update the spreadsheet!
+
+How do I run the tests?
 -----
 `nosetests`
 
@@ -71,6 +85,7 @@ MIT License. See LICENSE file for full text.
 
 .. _Documentation: http://butterdb.readthedocs.org
 .. _butterdb on PyPi: https://pypi.python.org/pypi/butterdb
+.. _gspread: https://github.com/burnash/gspread
 
 .. |Build Status| image:: https://travis-ci.org/Widdershin/butterdb.png?branch=master
    :target: https://travis-ci.org/Widdershin/butterdb
