@@ -1,10 +1,13 @@
 from nose.tools import *  # PEP8 asserts
+from nose.exc import SkipTest
 
 import butterdb
 
 
 class MockDB(butterdb.Database):
+
     """A Mock Database that doesn't connect to Google Spreadhset"""
+
     def __init__(self, name):
         self.models = {}
         self.name = name
@@ -44,12 +47,14 @@ database = MockDB("TestDB")
 
 @butterdb.register(database)
 class FooModel(butterdb.Model):
+
     def __init__(self, foo, bar):
         self.foo = self.field(foo)
         self.bar = self.field(bar)
 
 
 class TestModel(object):
+
     def test_attrs(self):
         foo, bar = "baz", "fro"
         model = FooModel(foo, bar)
@@ -79,6 +84,7 @@ class TestModel(object):
         assert_equal(instance._id, 6)
 
     def test_list_storage(self):
+        raise SkipTest("Pending")
         test_list = [1, 2, 3, 4, 5]
         instance = FooModel(test_list, "bar")
 
@@ -89,6 +95,7 @@ class TestModel(object):
         assert_equal(my_instance.foo, test_list)
 
     def test_dict_storage(self):
+        raise SkipTest("Pending")
         test_dict = {
             "what": 5,
             "how": "snaz",
