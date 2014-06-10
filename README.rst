@@ -1,8 +1,8 @@
 butterdb
 ========
 
-| Master: |Build Status|
-| Develop: |Build Status|
+| Master: |Build Status Master|
+| Develop: |Build Status Develop|
 
 `Documentation`_
 
@@ -72,7 +72,7 @@ MIT License. See LICENSE file for full text.
 .. _Documentation: http://butterdb.readthedocs.org
 .. _butterdb on PyPi: https://pypi.python.org/pypi/butterdb
 
-.. |Build Status| image:: https://travis-ci.org/Widdershin/butterdb.png?branch=master
+.. |Build Status Master| image:: https://travis-ci.org/Widdershin/butterdb.png?branch=master
    :target: https://travis-ci.org/Widdershin/butterdb
-.. |Build Status| image:: https://travis-ci.org/Widdershin/butterdb.png?branch=develop
+.. |Build Status Develop| image:: https://travis-ci.org/Widdershin/butterdb.png?branch=develop
    :target: https://travis-ci.org/Widdershin/butterdb
