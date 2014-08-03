@@ -24,7 +24,7 @@ How do I use it?
            self.name = self.field(name)
            self.password = self.field(password)
    
-   users = User.get_instances
+   users = User.get_instances()
    
    marianne = users[1]
    
