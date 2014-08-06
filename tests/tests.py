@@ -109,3 +109,19 @@ class TestModel(object):
         my_instance = FooModel.get_instances()[-1]
 
         assert_equal(my_instance.foo, test_dict)
+
+    def test_modify_existing(self):
+        # ensure there is something
+        foo, bar = 123, 456
+        instance = FooModel(foo, bar)
+        instance.commit()
+
+        assert_equal(instance.foo, foo)
+        assert_equal(instance.bar, bar)
+
+        # get a new instance to modify from there
+        new_instance = FooModel.get_instances()[-1]
+        new_instance.foo = bar
+        new_instance.commit()
+
+        assert_equal(new_instance.foo, bar)

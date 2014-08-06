@@ -143,7 +143,7 @@ class Model(object):
 
         for n, fields in enumerate([row for row in data if any(row)], start=1):
             instances.append(
-                cls._init_with_id(id, *fields[:len(cls.columns)]))
+                cls._init_with_id(n, *fields[:len(cls.columns)]))
 
         return instances
 
