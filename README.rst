@@ -15,8 +15,16 @@ How do I use it?
 ::
 
    import butterdb
+   import json
+
+   # For getting OAuth Credential JSON file see http://gspread.readthedocs.org/en/latest/oauth2.html
+   # Ensure that the client_email has been granted privileges to any workbooks you wish to access.
+
+   json_key = json.load(open('SomeGoogleProject-2a31d827b2a9.json'))
+   client_email = json_key['client_email']
+   private_key = str(json_key['private_key']).encode('utf-8')
    
-   database = butterdb.Database("MyDatabaseSheet", "foo@google.com", "password")
+   database = butterdb.Database(name="MyDatabaseSheet", client_email=client_email, private_key=private_key)
    
    @butterdb.register(database)
    class User(butterdb.Model):
