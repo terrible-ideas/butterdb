@@ -31,7 +31,8 @@ setup(
     package_dir={'butterdb': 'butterdb'},
     include_package_data=True,
     install_requires=[
-        'gspread'
+        'gspread',
+        'oauth2client'
     ],
     license="MIT",
     zip_safe=False,

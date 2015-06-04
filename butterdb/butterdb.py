@@ -1,7 +1,6 @@
 """butterdb is a Python ORM for Google Drive Spreadsheets."""
-
-
 import gspread
+from oauth2client.client import SignedJwtAssertionCredentials
 
 
 def register(database):
@@ -16,14 +15,22 @@ def register(database):
 
 class Database(object):
     """
-    Interacts with Google Spreadsheet.
+    Interacts with Google Spreadsheet using OAuth2.
     Registers models and updates and reads data.
     """
 
-    def __init__(self, name, username, password):
+    def __init__(self, name, client_email=None, private_key=None, username=None, password=None):
+        if username or password:
+            msg = 'Simple authentication has been deprecated.  Please use OAuth2.' + \
+                  '\nSee http://gspread.readthedocs.org/en/latest/oauth2.html'
+            raise Exception(msg)
+
         self.models = {}
         self.name = name
-        self.client = gspread.login(username, password)
+
+        scope = ['https://spreadsheets.google.com/feeds']
+        credentials = SignedJwtAssertionCredentials(client_email, private_key, scope)
+        self.client = gspread.authorize(credentials)
         self.db = self.client.open(name)
 
     def get_worksheet_names(self):
