@@ -20,7 +20,9 @@ How do I use it?
    # For getting OAuth Credential JSON file see http://gspread.readthedocs.org/en/latest/oauth2.html
    # Ensure that the client_email has been granted privileges to any workbooks you wish to access.
 
-   json_key = json.load(open('SomeGoogleProject-2a31d827b2a9.json'))
+   with open('SomeGoogleProject-2a31d827b2a9.json') as credentials_file:
+      json_key = json.load(credentials_file)
+
    client_email = json_key['client_email']
    private_key = str(json_key['private_key']).encode('utf-8')
    
