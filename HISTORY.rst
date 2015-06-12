@@ -29,3 +29,9 @@ History
 ++++++++++++++++++
 
 * Renamed project to butterdb
+
+0.1.5 12/6/15
+++++++++++++++++++
+
+* Use OAuth instead of now deprecated simple login (thanks to @julierae!)
+* Fix a bug in get_instance that broke modifying fields (thanks to @dequis!)
